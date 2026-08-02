@@ -1,4 +1,4 @@
-﻿/**
+/**
  * SSAS - Simple Smart Automotive Software
  * Copyright (C) 2025 Parai Wang <parai@foxmail.com>
  *
@@ -69,7 +69,7 @@ public:
   BasicString &operator=(BasicString &&) = default;
 
   /* @SWS_CORE_03302 @brief Constructor from StringView. */
-  explicit BasicString(StringView sv) : m_data(sv.data(), sv.size()) {
+  explicit BasicString(StringView sv, const Allocator &a = Allocator()) : m_data(sv.data(), sv.size(), a) {
   }
 
   /* @SWS_CORE_03303 @brief Constructor from substring. */
@@ -96,7 +96,7 @@ public:
     return *this;
   }
 
-  /** @SWS_CORE_03305 @brief Assignment from StringView. */
+  /** @SWS_CORE_03087 @brief Assignment from StringView. */
   BasicString &assign(StringView sv) {
     m_data.assign(sv.data(), sv.size());
     return *this;
@@ -268,7 +268,7 @@ public:
     return m_data.rfind(sv.data(), pos, sv.size());
   }
 
-  /** @SWS_CORE_03337 @brief Swap contents. */
+  /** @SWS_CORE_03412 @brief Swap contents. */
   void swap(BasicString &other) noexcept {
     m_data.swap(other.m_data);
   }

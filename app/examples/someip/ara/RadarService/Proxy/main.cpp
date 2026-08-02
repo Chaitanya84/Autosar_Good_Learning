@@ -68,7 +68,7 @@ static void RadarServiceMain(void) {
   StringView instanceIdStr((char *)&instanceId, 2);
   InstanceSpecifier instspec{instanceIdStr};
 
-  Result<ServiceHandleContainer<RadarServiceProxy::HandleType>> rslt({});
+  Result<ServiceHandleContainer<RadarServiceProxy::HandleType>> rslt;
 
   do {
     rslt = RadarServiceProxy::FindService(instspec);

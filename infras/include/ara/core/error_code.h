@@ -22,7 +22,7 @@ namespace core {
  *specific to this error domain. */
 class ErrorCode final {
 public:
-  /** @SWS_CORE_00511 @brief Default constructor. */
+  /** @brief Default constructor. */
   constexpr ErrorCode() noexcept : m_code(0), m_domain(&m_domainDummy), m_supportData(0) {}
 
   /** @SWS_CORE_00512 @brief Construct a new ErrorCode instance with parameters.
@@ -39,18 +39,18 @@ public:
     : m_code(value), m_domain(&domain), m_supportData(data) {
   }
 
-  /** @SWS_CORE_00513 @brief Construct a new ErrorCode instance with enum and domain. */
+  /** @brief Construct a new ErrorCode instance with enum and domain. */
   template <typename EnumT>
   constexpr ErrorCode(EnumT e, const ErrorDomain &domain,
                       ErrorDomain::SupportDataType data = ErrorDomain::SupportDataType()) noexcept
     : m_code(static_cast<ErrorDomain::CodeType>(e)), m_domain(&domain), m_supportData(data) {
   }
 
-  /** @SWS_CORE_00514 @brief Copy constructor. */
+  /** @brief Copy constructor. */
   constexpr ErrorCode(const ErrorCode &other) noexcept
     : m_code(other.m_code), m_domain(other.m_domain), m_supportData(other.m_supportData) {}
 
-  /** @SWS_CORE_00514 @brief Copy assignment. */
+  /** @brief Copy assignment. */
   ErrorCode &operator=(const ErrorCode &other) noexcept {
     if (this != &other) {
       m_code = other.m_code;

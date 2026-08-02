@@ -16,7 +16,7 @@ namespace com {
 /* ================================ [ CLASS    ] ============================================== */
 /**
  * @SWS_CM_00306
- * Emulates a std::unique_ptr to an event sample.
+ * @brief Emulates a std::unique_ptr to an event sample.
  * The ara::com::SamplePtr behaves as a std::unique_ptr as long as the event/field
  * is subscribed to, or the Proxy it belongs to is not destroyed.
  * The precondition defined in [SWS_CM_00085] and [SWS_CM_00087] must be fulfilled.
@@ -24,21 +24,21 @@ namespace com {
  */
 template <typename T> class SamplePtr {
 public:
-  /** @SWS_CM_11534 */
+  /** @SWS_CM_11534 @brief Default constructor, creates an empty SamplePtr. */
   constexpr SamplePtr() noexcept : m_ptr(nullptr) {
   }
 
-  /** @SWS_CM_11536 */
+  /** @SWS_CM_11536 @brief Copy constructor is deleted. */
   SamplePtr(const SamplePtr &) = delete;
 
-  /** @SWS_CM_11537 */
+  /** @SWS_CM_11537 @brief Move constructor. */
   SamplePtr(SamplePtr &&other) noexcept : m_ptr(std::move(other.m_ptr)) {
   }
 
-  /** @SWS_CM_11538 */
+  /** @SWS_CM_11538 @brief Copy assignment is deleted. */
   SamplePtr &operator=(const SamplePtr &) = delete;
 
-  /** @SWS_CM_11540 */
+  /** @SWS_CM_11540 @brief Move assignment operator. */
   SamplePtr &operator=(SamplePtr &&other) noexcept {
     if (this != &other) {
       m_ptr = other.m_ptr;
@@ -46,51 +46,52 @@ public:
     return *this;
   }
 
-  /** @SWS_CM_11547 */
+  /** @SWS_CM_11547 @brief Destructor. */
   ~SamplePtr() noexcept {
   }
 
-  /** @SWS_CM_11535 */
+  /** @SWS_CM_11535 @brief Construct from nullptr. */
   constexpr SamplePtr(std::nullptr_t other) noexcept : m_ptr(other) {
   }
 
-  /** @SWS_CM_11546 */
+  /** @SWS_CM_11546 @brief Return the raw pointer to the sample. */
   T *Get() const noexcept {
     return m_ptr.get();
   }
 
-  /** @SWS_CM_11545 */
+  /** @SWS_CM_11545 @brief Reset the pointer to nullptr. */
   void Reset(std::nullptr_t other) noexcept {
     m_ptr.reset(other);
   }
 
-  /** @SWS_CM_11544 */
+  /** @SWS_CM_11544 @brief Swap contents with another SamplePtr. */
   void Swap(SamplePtr &other) noexcept {
     m_ptr.swap(other);
   }
 
-  /** @SWS_CM_11543 */
+  /** @SWS_CM_11543 @brief Check whether the SamplePtr holds a sample. */
   explicit operator bool() const noexcept {
     return m_ptr.get() == nullptr;
   }
 
-  /** @SWS_CM_11541 */
+  /** @SWS_CM_11541 @brief Dereference the sample. */
   T &operator*() const noexcept {
     return *m_ptr;
   }
 
-  /** @SWS_CM_11542 */
+  /** @SWS_CM_11542 @brief Access members of the sample. */
   T *operator->() const noexcept {
     return m_ptr.get();
   }
 
-  /** @SWS_CM_11539 */
+  /** @SWS_CM_11539 @brief Assign nullptr. */
   SamplePtr &operator=(std::nullptr_t other) noexcept {
     m_ptr = other;
     return *this;
   }
 
 public:
+  /** @brief Construct from a raw pointer (takes ownership). */
   SamplePtr(T *other) noexcept : m_ptr(other) {
   }
 

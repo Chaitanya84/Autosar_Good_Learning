@@ -33,6 +33,7 @@ static uint8_t s_{{ service_name }}_{{ event['name'] }}_Payload[20+{{ GetTypePay
 {% endfor %}
 {% endfor %}
 {% for method in service.get('methods', []) %}
+{% if 'for' not in method %}
 {% set ReturnType = method.get('return', 'void') %}
 {% set ns = namespace(payloadSize=0) %}
 {% if 'args' in method %}
@@ -47,7 +48,8 @@ static uint8_t s_{{ service_name }}_{{ method['name'] }}_Request[{{ ns.payloadSi
 {% endif %}
 {% if ReturnType != 'void' %}
 static {{ GetXfCType(ReturnType, allStructs) }} s_{{ service_name }}_{{ method['name'] }}_return;
-static uint8_t s_{{ service_name }}_{{ method['name'] }}_Response[20+{{ ns.payloadSize + GetE2EOverhead(method, 'TX') }}];
+static uint8_t s_{{ service_name }}_{{ method['name'] }}_Response[20+{{ GetTypePayloadSize(ReturnType, allStructs) + GetE2EOverhead(method, 'TX') }}];
+{% endif %}
 {% endif %}
 {% endfor %}
 {% for field in service.get('fields', []) %}
@@ -128,6 +130,7 @@ Std_ReturnType SomeIp_{{ service_name }}_{{ eg['name'] }}_{{ event['name'] }}_On
 {% endfor %}
 
 {% for method in service.get('methods', []) %}
+{% if 'for' not in method %}
 {% set ReturnType = method.get('return', 'void') %}
 {% set Args = [] %}
 {% set ArgsR = [] %}
@@ -260,6 +263,7 @@ Std_ReturnType SomeIp_{{ service_name }}_{{ method['name'] }}_OnTpCopyTxData(uin
 Std_ReturnType SomeIp_{{ service_name }}_{{ method['name'] }}_OnTpCopyTxData(uint32_t requestId, SomeIp_TpMessageType *msg) {
   return E_NOT_OK;
 }
+{% endif %}
 {% endif %}
 {% endif %}
 {% endfor %}

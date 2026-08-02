@@ -267,7 +267,7 @@ public:
     return std::move(m_value);
   }
 
-  /** @SWS_CORE_00744 @brief Access the contained value (lvalue). */
+  /** @SWS_CORE_00774 @brief Access the contained value (lvalue). */
   T &operator*() & noexcept {
     return m_value;
   }
@@ -341,7 +341,7 @@ public:
     : m_hasValue(other.m_hasValue), m_value(other.m_value), m_error(other.m_error) {
   }
 
-  /** @SWS_CORE_00909 @brief Construct from value reference. */
+  /** @SWS_CORE_00908 @brief Construct from value reference. */
   explicit Result(T &value) noexcept : m_hasValue(true), m_value(&value), m_error() {
   }
 
@@ -350,7 +350,7 @@ public:
     : m_hasValue(false), m_value(nullptr), m_error(std::move(error)) {
   }
 
-  /** @SWS_CORE_00908 @brief Construct from error lvalue. */
+  /** @SWS_CORE_00909 @brief Construct from error lvalue. */
   explicit Result(const E &error) noexcept(std::is_nothrow_copy_constructible<E>::value)
     : m_hasValue(false), m_value(nullptr), m_error(error) {
   }
@@ -453,13 +453,13 @@ public:
     return HasValue() ? Optional<T &>(*m_value) : nullopt;
   }
 
-  /** @SWS_CORE_00939 @brief Reset to default state. */
+  /** @brief Reset to default state. */
   void Reset() noexcept {
     m_hasValue = false;
     m_value = nullptr;
   }
 
-  /** @SWS_CORE_00940 @brief Swap with another Result. */
+  /** @SWS_CORE_00917 @brief Swap with another Result. */
   void Swap(Result &other) noexcept {
     std::swap(m_hasValue, other.m_hasValue);
     std::swap(m_value, other.m_value);
@@ -482,7 +482,7 @@ public:
     return *m_value;
   }
 
-  /** @SWS_CORE_00934 @brief Return the contained value or throw an exception (const lvalue). */
+  /** @SWS_CORE_00938 @brief Return the contained value or throw an exception (const lvalue). */
   const T &ValueOrThrow() const & noexcept(false) {
     if (!HasValue()) {
       throw std::runtime_error("Result contains error");
@@ -490,7 +490,7 @@ public:
     return *m_value;
   }
 
-  /** @SWS_CORE_00933 @brief Return the contained value or throw an exception (lvalue). */
+  /** @SWS_CORE_00949 @brief Return the contained value or throw an exception (lvalue). */
   T &ValueOrThrow() & noexcept(false) {
     if (!HasValue()) {
       throw std::runtime_error("Result contains error");
@@ -498,7 +498,7 @@ public:
     return *m_value;
   }
 
-  /** @SWS_CORE_00917 @brief Swap two Result instances (non-member). */
+  /** @brief Swap two Result instances (non-member). */
   friend void swap(Result &lhs, Result &rhs) noexcept(noexcept(lhs.Swap(rhs))) {
     lhs.Swap(rhs);
   }

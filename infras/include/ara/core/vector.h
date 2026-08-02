@@ -85,79 +85,106 @@ public:
   /* @SWS_CORE_01316 @brief Default constructor. */
   Vector() = default;
 
-  explicit Vector(size_t count) : m_data(count) {
+  /* @SWS_CORE_01319 @brief Construct vector with allocator. */
+  explicit Vector(const Allocator &alloc) noexcept : m_data(alloc) {
   }
 
-  Vector(size_t count, const T &value) : m_data(count, value) {
+  /* @SWS_CORE_01320 @brief Construct vector with count default-inserted elements. */
+  explicit Vector(size_t count, const Allocator &alloc = Allocator()) : m_data(count, alloc) {
   }
 
-  /* @SWS_CORE_01324 @brief Constructor from input iterators. */
-  template <typename InputIt> Vector(InputIt first, InputIt last) : m_data(first, last) {
+  /* @SWS_CORE_01321 @brief Construct vector with count copies of value. */
+  Vector(size_t count, const T &value, const Allocator &alloc = Allocator())
+    : m_data(count, value, alloc) {
+  }
+
+  /* @SWS_CORE_01322 @brief Constructor from input iterators. */
+  template <typename InputIt>
+  Vector(InputIt first, InputIt last, const Allocator &alloc = Allocator())
+    : m_data(first, last, alloc) {
   }
 
   /* @SWS_CORE_01325 @brief Constructor from initializer list. */
-  Vector(std::initializer_list<T> init) : m_data(init) {
+  Vector(std::initializer_list<T> init, const Allocator &alloc = Allocator()) : m_data(init, alloc) {
   }
 
+  /** @SWS_CORE_01352 @brief Access element by index. */
   T &operator[](size_t index) {
     return m_data[index];
   }
+  /** @SWS_CORE_01353 @brief Access element by index (const). */
   const T &operator[](size_t index) const {
     return m_data[index];
   }
 
+  /** @SWS_CORE_01354 @brief Access element with bounds checking. */
   T &at(size_t index) {
     return m_data.at(index);
   }
+  /** @SWS_CORE_01355 @brief Access element with bounds checking (const). */
   const T &at(size_t index) const {
     return m_data.at(index);
   }
 
+  /** @SWS_CORE_01356 @brief Access first element. */
   T &front() {
     return m_data.front();
   }
+  /** @SWS_CORE_01357 @brief Access first element (const). */
   const T &front() const {
     return m_data.front();
   }
 
+  /** @SWS_CORE_01358 @brief Access last element. */
   T &back() {
     return m_data.back();
   }
+  /** @SWS_CORE_01359 @brief Access last element (const). */
   const T &back() const {
     return m_data.back();
   }
 
+  /** @SWS_CORE_01360 @brief Access underlying array. */
   T *data() noexcept {
     return m_data.data();
   }
+  /** @SWS_CORE_01361 @brief Access underlying array (const). */
   const T *data() const noexcept {
     return m_data.data();
   }
 
+  /** @SWS_CORE_01344 @brief Check if vector is empty. */
   bool empty() const noexcept {
     return m_data.empty();
   }
+  /** @SWS_CORE_01345 @brief Return number of elements. */
   size_t size() const noexcept {
     return m_data.size();
   }
+  /** @SWS_CORE_01348 @brief Return current capacity. */
   size_t capacity() const noexcept {
     return m_data.capacity();
   }
 
+  /** @SWS_CORE_01347 @brief Reserve storage capacity. */
   void reserve(size_t new_cap) {
     m_data.reserve(new_cap);
   }
+  /** @SWS_CORE_01349 @brief Reduce capacity to fit size. */
   void shrink_to_fit() {
     m_data.shrink_to_fit();
   }
 
+  /** @SWS_CORE_01375 @brief Clear contents. */
   void clear() noexcept {
     m_data.clear();
   }
 
+  /** @SWS_CORE_01363 @brief Append element (copy). */
   void push_back(const T &value) {
     m_data.push_back(value);
   }
+  /** @SWS_CORE_01364 @brief Append element (move). */
   void push_back(T &&value) {
     m_data.push_back(std::move(value));
   }
@@ -167,27 +194,34 @@ public:
     return m_data.emplace_back(std::forward<Args>(args)...);
   }
 
+  /** @SWS_CORE_01365 @brief Remove last element. */
   void pop_back() {
     m_data.pop_back();
   }
 
+  /** @SWS_CORE_01332 @brief Return iterator to beginning. */
   auto begin() noexcept {
     return m_data.begin();
   }
+  /** @SWS_CORE_01334 @brief Return iterator to end. */
   auto end() noexcept {
     return m_data.end();
   }
 
+  /** @SWS_CORE_01333 @brief Return const iterator to beginning. */
   auto begin() const noexcept {
     return m_data.begin();
   }
+  /** @SWS_CORE_01335 @brief Return const iterator to end. */
   auto end() const noexcept {
     return m_data.end();
   }
 
+  /** @SWS_CORE_01340 @brief Return const iterator to beginning. */
   auto cbegin() const noexcept {
     return m_data.cbegin();
   }
+  /** @SWS_CORE_01341 @brief Return const iterator to end. */
   auto cend() const noexcept {
     return m_data.cend();
   }

@@ -13,7 +13,7 @@ namespace ara {
 namespace com {
 /* ================================ [ MACROS    ] ============================================== */
 /* ================================ [ TYPES     ] ============================================== */
-/** @SWS_CM_10432 */
+/** @SWS_CM_10432 @brief Error codes for ara::com. */
 enum class ComErrc : ara::core::ErrorDomain::CodeType {
   kOk = 0,
   kServiceNotAvailable = 1,
@@ -27,32 +27,32 @@ enum class ComErrc : ara::core::ErrorDomain::CodeType {
   kUnknownApplicationError = 22,
 };
 
-/** @SWS_CM_11327 */
+/** @SWS_CM_11327 @brief Exception type thrown for ara::com errors. */
 class ComException final : public ara::core::Exception {
 public:
-  /** @SWS_CM_11328  */
+  /** @SWS_CM_11328 @brief Construct a ComException from an ErrorCode. */
   explicit ComException(ara::core::ErrorCode errorCode) noexcept;
 };
 
-/** @SWS_CM_11329 */
+/** @SWS_CM_11329 @brief Error domain for ara::com errors. */
 class ComErrorDomain final : public ara::core::ErrorDomain {
 public:
-  /** @SWS_CM_11336 */
+  /** @SWS_CM_11336 @brief Alias for the error code enumeration. */
   using Errc = ComErrc;
 
-  /** @SWS_CM_11337 */
+  /** @SWS_CM_11337 @brief Alias for the exception type. */
   using Exception = ComException;
 
-  /** @SWS_CM_11330 */
+  /** @SWS_CM_11330 @brief Default constructor is deleted. */
   ComErrorDomain() = delete;
 
-  /** @SWS_CM_11332 */
+  /** @SWS_CM_11332 @brief Return a human-readable message for an error code. */
   const char *Message(CodeType errorCode) const noexcept override;
 
-  /** @SWS_CM_11331 */
+  /** @SWS_CM_11331 @brief Return the name of the error domain. */
   const char *Name() const noexcept override;
 
-  /** @SWS_CM_11333 */
+  /** @SWS_CM_11333 @brief Throw an ErrorCode as a ComException. */
   void ThrowAsException(const ara::core::ErrorCode &errorCode) const noexcept(false) override;
 };
 /* ================================ [ CLASS    ] ============================================== */

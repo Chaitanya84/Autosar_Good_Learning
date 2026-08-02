@@ -15,13 +15,13 @@ namespace core {
 /* ================================ [ MACROS    ] ============================================== */
 /* ================================ [ TYPES     ] ============================================== */
 /* ================================ [ CLASS    ] ============================================== */
-/** @brief Encapsulation of an error domain.
+/** @SWS_CORE_00110 @brief Encapsulation of an error domain.
  * An error domain is the controlling entity for ErrorCode's error code values, and defines the
  * mapping of such error code values to textual representations.
  * This type constitutes a base class for error domain implementations.
  * This class is a literal type, and subclasses are strongly advised to be literal types as well.
  */
-class ErrorDomain { /* @SWS_CORE_00110 */
+class ErrorDomain {
 public:
   /* @SWS_CORE_00122 @brief Error code type. */
   using CodeType = std::int32_t;
@@ -73,7 +73,7 @@ public:
     return m_id != other.m_id;
   }
 
-  /** @SWS_CORE_00137 @brief @brief Compare for equality with another ErrorDomain instance.
+  /** @SWS_CORE_00137 @brief Compare for equality with another ErrorDomain instance.
    * Two ErrorDomain instances compare equal when their identifiers (returned by Id()) are equal */
   constexpr bool operator==(const ErrorDomain &other) const noexcept {
     return m_id == other.m_id;

@@ -75,12 +75,14 @@ Std_ReturnType {{ service_name }}_Set{{ field['name'] }}_Async({{ GetXfCType(fie
 void SomeIp_{{ service_name }}_OnConnect(uint16_t conId, boolean isConnected);
 
 {% for method in service.get('methods', []) %}
+{% if 'for' not in method %}
 Std_ReturnType SomeIp_{{ service_name }}_{{ method['name'] }}_OnRequest(uint32_t requestId, SomeIp_MessageType* req, SomeIp_MessageType* res);
 Std_ReturnType SomeIp_{{ service_name }}_{{ method['name'] }}_OnFireForgot(uint32_t requestId, SomeIp_MessageType* res);
 Std_ReturnType SomeIp_{{ service_name }}_{{ method['name'] }}_OnAsyncRequest(uint32_t requestId, SomeIp_MessageType* res);
 {% if method.get('tp', false) %}
 Std_ReturnType SomeIp_{{ service_name }}_{{ method['name'] }}_OnTpCopyRxData(uint32_t requestId, SomeIp_TpMessageType *msg);
 Std_ReturnType SomeIp_{{ service_name }}_{{ method['name'] }}_OnTpCopyTxData(uint32_t requestId, SomeIp_TpMessageType *msg);
+{% endif %}
 {% endif %}
 {% endfor %}
 

@@ -14,7 +14,7 @@ namespace core {
 /* ================================ [ MACROS    ] ============================================== */
 /* ================================ [ TYPES     ] ============================================== */
 /* ================================ [ CLASS    ] ============================================== */
-class InstanceSpecifier final { /** @SWS_CORE_08001 */
+class InstanceSpecifier final { /** @SWS_CORE_08001 @brief Identifies an instance of a service via a qualified short name. */
 public:
   /** @SWS_CORE_08023 @brief Move constructor. */
   InstanceSpecifier(InstanceSpecifier &&other) noexcept

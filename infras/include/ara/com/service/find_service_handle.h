@@ -13,19 +13,19 @@ namespace com {
 /* ================================ [ MACROS    ] ============================================== */
 /* ================================ [ TYPES     ] ============================================== */
 /* ================================ [ CLASS    ] ============================================== */
-/* @SWS_CM_00303 */
+/* @SWS_CM_00303 @brief Handle identifying an ongoing FindService search. */
 struct FindServiceHandle {
 public:
-  /** @SWS_CM_00353 */
+  /** @SWS_CM_00353 @brief Default constructor is deleted. */
   FindServiceHandle() = delete;
 
-  /** @SWS_CM_11528 */
+  /** @SWS_CM_11528 @brief Copy assignment operator. */
   FindServiceHandle &operator=(const FindServiceHandle &other);
 
-  /** @SWS_CM_11527 */
+  /** @SWS_CM_11527 @brief Compare for ordering with another FindServiceHandle. */
   bool operator<(const FindServiceHandle &other) const;
 
-  /** @SWS_CM_11526 */
+  /** @SWS_CM_11526 @brief Compare for equality with another FindServiceHandle. */
   bool operator==(const FindServiceHandle &other) const;
 
 private:

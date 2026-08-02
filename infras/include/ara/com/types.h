@@ -30,27 +30,27 @@ template <typename T> using ServiceHandleContainer = ara::core::Vector<T>;
 template <typename T>
 using FindServiceHandler = std::function<void(ServiceHandleContainer<T>, FindServiceHandle)>;
 
-/** @SWS_CM_00310 */
+/** @SWS_CM_00310 @brief Subscription state of an event/field. */
 enum class SubscriptionState : std::uint8_t {
   kSubscribed,
   kNotSubscribed,
   kSubscriptionPending
 };
 
-/** @SWS_CM_00311 */
+/** @SWS_CM_00311 @brief Callback invoked when the subscription state changes. */
 using SubscriptionStateChangeHandler = std::function<void(SubscriptionState)>;
 
-/** @SWS_CM_00301 */
+/** @SWS_CM_00301 @brief Mode controlling how method calls are processed by a skeleton. */
 enum class MethodCallProcessingMode : std::uint8_t {
   kPoll,
   kEvent,
   kEventSingleThread,
 };
 
-/** @SWS_CM_00319 */
+/** @SWS_CM_00319 @brief Container of InstanceIdentifiers. */
 using InstanceIdentifierContainer = ara::core::Vector<InstanceIdentifier>;
 
-/** @SWS_CM_00308 */
+/** @SWS_CM_00308 @brief Pointer type for sample allocation (unique_ptr alias). */
 template <typename T> using SampleAllocateePtr = std::unique_ptr<T>;
 /* ================================ [ DECLARES  ] ============================================== */
 /* ================================ [ DATAS     ] ============================================== */

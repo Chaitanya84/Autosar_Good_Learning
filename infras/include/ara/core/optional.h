@@ -56,13 +56,13 @@ public:
     }
   }
 
-  /** @SWS_CORE_01111 @brief Constructor from value (rvalue). */
+  /** @SWS_CORE_01109 @brief Constructor from value (rvalue). */
   constexpr Optional(T &&value) noexcept(std::is_nothrow_move_constructible<T>::value)
       : m_hasValue(true) {
     new (&m_value) T(std::move(value));
   }
 
-  /** @SWS_CORE_01107 @brief Constructor from value (lvalue). */
+  /** @SWS_CORE_01109 @brief Constructor from value (lvalue). */
   constexpr Optional(const T &value) noexcept(std::is_nothrow_copy_constructible<T>::value)
       : m_hasValue(true) {
     new (&m_value) T(value);
@@ -80,7 +80,7 @@ public:
     }
   }
 
-  /** @SWS_CORE_01108 @brief Move constructor from Optional<U>. */
+  /** @SWS_CORE_01111 @brief Move constructor from Optional<U>. */
   template <typename U>
   explicit Optional(Optional<U> &&other) noexcept(
     std::is_nothrow_constructible<T, U &&>::value) {
@@ -131,7 +131,7 @@ public:
     return *this;
   }
 
-  /** @SWS_CORE_01117 @brief Assignment from nullopt. */
+  /** @SWS_CORE_01113 @brief Assignment from nullopt. */
   constexpr Optional &operator=(nullopt_t) noexcept {
     if (m_hasValue) {
       m_value.~T();
@@ -140,7 +140,7 @@ public:
     return *this;
   }
 
-  /** @SWS_CORE_01118 @brief Assignment from value. */
+  /** @SWS_CORE_01116 @brief Assignment from value. */
   template <typename U,
             typename = typename std::enable_if<
               !std::is_same<typename std::decay<U>::type, Optional>::value>::type>
@@ -232,7 +232,7 @@ public:
     return m_value;
   }
 
-  /** @SWS_CORE_01132 @brief Return the contained value (const rvalue). */
+  /** @SWS_CORE_01133 @brief Return the contained value (const rvalue). */
   constexpr const T &&value() const && noexcept(false) {
     if (!m_hasValue) {
       throw std::bad_optional_access();
@@ -240,7 +240,7 @@ public:
     return std::move(m_value);
   }
 
-  /** @SWS_CORE_01133 @brief Return the contained value (rvalue). */
+  /** @SWS_CORE_01132 @brief Return the contained value (rvalue). */
   constexpr T &&value() && noexcept(false) {
     if (!m_hasValue) {
       throw std::bad_optional_access();
@@ -248,7 +248,7 @@ public:
     return std::move(m_value);
   }
 
-  /** @SWS_CORE_01135 @brief Return the contained value or default (const lvalue). */
+  /** @SWS_CORE_01134 @brief Return the contained value or default (const lvalue). */
   template <typename U>
   constexpr T value_or(U &&defaultValue) const & noexcept(
     std::is_nothrow_copy_constructible<T>::value && std::is_nothrow_constructible<T, U &&>::value) {
@@ -276,13 +276,13 @@ private:
 };
 
 /* ================================ [ NON-MEMBER FUNCTIONS ] ==================================== */
-/** @SWS_CORE_01121 @brief Swap two Optional instances. */
+/** @SWS_CORE_01096 @brief Swap two Optional instances. */
 template <typename T>
 void swap(Optional<T> &lhs, Optional<T> &rhs) noexcept(noexcept(lhs.swap(rhs))) {
   lhs.swap(rhs);
 }
 
-/** @SWS_CORE_01140 @brief Compare Optional for equality. */
+/** @SWS_CORE_01142 @brief Compare Optional for equality. */
 template <typename T>
 constexpr bool operator==(const Optional<T> &lhs, const Optional<T> &rhs) noexcept {
   if (lhs.has_value() != rhs.has_value()) return false;
@@ -290,13 +290,13 @@ constexpr bool operator==(const Optional<T> &lhs, const Optional<T> &rhs) noexce
   return *lhs == *rhs;
 }
 
-/** @SWS_CORE_01141 @brief Compare Optional for inequality. */
+/** @SWS_CORE_01143 @brief Compare Optional for inequality. */
 template <typename T>
 constexpr bool operator!=(const Optional<T> &lhs, const Optional<T> &rhs) noexcept {
   return !(lhs == rhs);
 }
 
-/** @SWS_CORE_01142 @brief Compare Optional for less than. */
+/** @SWS_CORE_01144 @brief Compare Optional for less than. */
 template <typename T>
 constexpr bool operator<(const Optional<T> &lhs, const Optional<T> &rhs) noexcept {
   if (!rhs.has_value()) return false;
@@ -304,176 +304,176 @@ constexpr bool operator<(const Optional<T> &lhs, const Optional<T> &rhs) noexcep
   return *lhs < *rhs;
 }
 
-/** @SWS_CORE_01143 @brief Compare Optional for greater than. */
+/** @SWS_CORE_01145 @brief Compare Optional for greater than. */
 template <typename T>
 constexpr bool operator>(const Optional<T> &lhs, const Optional<T> &rhs) noexcept {
   return rhs < lhs;
 }
 
-/** @SWS_CORE_01144 @brief Compare Optional for less than or equal. */
+/** @SWS_CORE_01146 @brief Compare Optional for less than or equal. */
 template <typename T>
 constexpr bool operator<=(const Optional<T> &lhs, const Optional<T> &rhs) noexcept {
   return !(rhs < lhs);
 }
 
-/** @SWS_CORE_01145 @brief Compare Optional for greater than or equal. */
+/** @SWS_CORE_01147 @brief Compare Optional for greater than or equal. */
 template <typename T>
 constexpr bool operator>=(const Optional<T> &lhs, const Optional<T> &rhs) noexcept {
   return !(lhs < rhs);
 }
 
-/** @SWS_CORE_01146 @brief Compare Optional with nullopt for equality. */
+/** @SWS_CORE_01186 @brief Compare Optional with nullopt for equality. */
 template <typename T>
 constexpr bool operator==(const Optional<T> &opt, nullopt_t) noexcept {
   return !opt.has_value();
 }
 
-/** @SWS_CORE_01146 @brief Compare nullopt with Optional for equality. */
+/** @SWS_CORE_01187 @brief Compare nullopt with Optional for equality. */
 template <typename T>
 constexpr bool operator==(nullopt_t, const Optional<T> &opt) noexcept {
   return !opt.has_value();
 }
 
-/** @SWS_CORE_01147 @brief Compare Optional with nullopt for inequality. */
+/** @SWS_CORE_01188 @brief Compare Optional with nullopt for inequality. */
 template <typename T>
 constexpr bool operator!=(const Optional<T> &opt, nullopt_t) noexcept {
   return opt.has_value();
 }
 
-/** @SWS_CORE_01147 @brief Compare nullopt with Optional for inequality. */
+/** @SWS_CORE_01189 @brief Compare nullopt with Optional for inequality. */
 template <typename T>
 constexpr bool operator!=(nullopt_t, const Optional<T> &opt) noexcept {
   return opt.has_value();
 }
 
-/** @SWS_CORE_01148 @brief Compare Optional with nullopt for less than. */
+/** @SWS_CORE_01190 @brief Compare Optional with nullopt for less than. */
 template <typename T>
 constexpr bool operator<(const Optional<T> &opt, nullopt_t) noexcept {
   return false;
 }
 
-/** @SWS_CORE_01148 @brief Compare nullopt with Optional for less than. */
+/** @SWS_CORE_01191 @brief Compare nullopt with Optional for less than. */
 template <typename T>
 constexpr bool operator<(nullopt_t, const Optional<T> &opt) noexcept {
   return opt.has_value();
 }
 
-/** @SWS_CORE_01149 @brief Compare Optional with nullopt for greater than. */
+/** @SWS_CORE_01194 @brief Compare Optional with nullopt for greater than. */
 template <typename T>
 constexpr bool operator>(const Optional<T> &opt, nullopt_t) noexcept {
   return opt.has_value();
 }
 
-/** @SWS_CORE_01149 @brief Compare nullopt with Optional for greater than. */
+/** @SWS_CORE_01195 @brief Compare nullopt with Optional for greater than. */
 template <typename T>
 constexpr bool operator>(nullopt_t, const Optional<T> &opt) noexcept {
   return false;
 }
 
-/** @SWS_CORE_01150 @brief Compare Optional with nullopt for less than or equal. */
+/** @SWS_CORE_01192 @brief Compare Optional with nullopt for less than or equal. */
 template <typename T>
 constexpr bool operator<=(const Optional<T> &opt, nullopt_t) noexcept {
   return !opt.has_value();
 }
 
-/** @SWS_CORE_01150 @brief Compare nullopt with Optional for less than or equal. */
+/** @SWS_CORE_01193 @brief Compare nullopt with Optional for less than or equal. */
 template <typename T>
 constexpr bool operator<=(nullopt_t, const Optional<T> &opt) noexcept {
   return true;
 }
 
-/** @SWS_CORE_01151 @brief Compare Optional with nullopt for greater than or equal. */
+/** @SWS_CORE_01196 @brief Compare Optional with nullopt for greater than or equal. */
 template <typename T>
 constexpr bool operator>=(const Optional<T> &opt, nullopt_t) noexcept {
   return true;
 }
 
-/** @SWS_CORE_01151 @brief Compare nullopt with Optional for greater than or equal. */
+/** @SWS_CORE_01197 @brief Compare nullopt with Optional for greater than or equal. */
 template <typename T>
 constexpr bool operator>=(nullopt_t, const Optional<T> &opt) noexcept {
   return !opt.has_value();
 }
 
-/** @SWS_CORE_01152 @brief Compare Optional with value for equality. */
+/** @SWS_CORE_01148 @brief Compare Optional with value for equality. */
 template <typename T, typename U>
 constexpr bool operator==(const Optional<T> &opt, const U &value) noexcept {
   return opt.has_value() && *opt == value;
 }
 
-/** @SWS_CORE_01152 @brief Compare value with Optional for equality. */
+/** @SWS_CORE_01149 @brief Compare value with Optional for equality. */
 template <typename T, typename U>
 constexpr bool operator==(const T &value, const Optional<U> &opt) noexcept {
   return opt.has_value() && value == *opt;
 }
 
-/** @SWS_CORE_01153 @brief Compare Optional with value for inequality. */
+/** @SWS_CORE_01176 @brief Compare Optional with value for inequality. */
 template <typename T, typename U>
 constexpr bool operator!=(const Optional<T> &opt, const U &value) noexcept {
   return !(opt == value);
 }
 
-/** @SWS_CORE_01153 @brief Compare value with Optional for inequality. */
+/** @SWS_CORE_01177 @brief Compare value with Optional for inequality. */
 template <typename T, typename U>
 constexpr bool operator!=(const T &value, const Optional<U> &opt) noexcept {
   return !(value == opt);
 }
 
-/** @SWS_CORE_01154 @brief Compare Optional with value for less than. */
+/** @SWS_CORE_01178 @brief Compare Optional with value for less than. */
 template <typename T, typename U>
 constexpr bool operator<(const Optional<T> &opt, const U &value) noexcept {
   return opt.has_value() && *opt < value;
 }
 
-/** @SWS_CORE_01154 @brief Compare value with Optional for less than. */
+/** @SWS_CORE_01179 @brief Compare value with Optional for less than. */
 template <typename T, typename U>
 constexpr bool operator<(const T &value, const Optional<U> &opt) noexcept {
   return !opt.has_value() || value < *opt;
 }
 
-/** @SWS_CORE_01155 @brief Compare Optional with value for greater than. */
+/** @SWS_CORE_01182 @brief Compare Optional with value for greater than. */
 template <typename T, typename U>
 constexpr bool operator>(const Optional<T> &opt, const U &value) noexcept {
   return !opt.has_value() || *opt > value;
 }
 
-/** @SWS_CORE_01155 @brief Compare value with Optional for greater than. */
+/** @SWS_CORE_01183 @brief Compare value with Optional for greater than. */
 template <typename T, typename U>
 constexpr bool operator>(const T &value, const Optional<U> &opt) noexcept {
   return opt.has_value() && value > *opt;
 }
 
-/** @SWS_CORE_01156 @brief Compare Optional with value for less than or equal. */
+/** @SWS_CORE_01180 @brief Compare Optional with value for less than or equal. */
 template <typename T, typename U>
 constexpr bool operator<=(const Optional<T> &opt, const U &value) noexcept {
   return !opt.has_value() || *opt <= value;
 }
 
-/** @SWS_CORE_01156 @brief Compare value with Optional for less than or equal. */
+/** @SWS_CORE_01181 @brief Compare value with Optional for less than or equal. */
 template <typename T, typename U>
 constexpr bool operator<=(const T &value, const Optional<U> &opt) noexcept {
   return opt.has_value() && value <= *opt;
 }
 
-/** @SWS_CORE_01157 @brief Compare Optional with value for greater than or equal. */
+/** @SWS_CORE_01184 @brief Compare Optional with value for greater than or equal. */
 template <typename T, typename U>
 constexpr bool operator>=(const Optional<T> &opt, const U &value) noexcept {
   return opt.has_value() && *opt >= value;
 }
 
-/** @SWS_CORE_01157 @brief Compare value with Optional for greater than or equal. */
+/** @SWS_CORE_01185 @brief Compare value with Optional for greater than or equal. */
 template <typename T, typename U>
 constexpr bool operator>=(const T &value, const Optional<U> &opt) noexcept {
   return !opt.has_value() || value >= *opt;
 }
 
-/** @SWS_CORE_01160 @brief Create Optional from value. */
+/** @SWS_CORE_01138 @brief Create Optional from value. */
 template <typename T>
 constexpr Optional<typename std::decay<T>::type> make_optional(T &&value) noexcept(
   std::is_nothrow_constructible<typename std::decay<T>::type, T &&>::value) {
   return Optional<typename std::decay<T>::type>(std::forward<T>(value));
 }
 
-/** @SWS_CORE_01161 @brief Create Optional by constructing value in-place. */
+/** @SWS_CORE_01139 @brief Create Optional by constructing value in-place. */
 template <typename T, typename... Args>
 constexpr Optional<T> make_optional(Args &&...args) noexcept(
   std::is_nothrow_constructible<T, Args...>::value) {
