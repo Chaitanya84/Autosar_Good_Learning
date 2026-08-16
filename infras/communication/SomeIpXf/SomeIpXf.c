@@ -143,7 +143,9 @@ static boolean SomeIpXf_IsTagMatched(const SomeIpXf_DataElementType *dataElement
 
   if ((tag & 0xFFF) == dataElement->tag) {
     if (dataElement->sizeOfDataLengthField) {
-      if (((tag & 0xF000) == 0x4000) || ((tag & 0xF000) == 0x5000)) {
+      if ((tag & 0xF000) == 0x4000) {
+        *sizeOfDataLengthField = dataElement->sizeOfDataLengthField;
+      } else if ((tag & 0xF000) == 0x5000) {
         *sizeOfDataLengthField = 1;
       } else if ((tag & 0xF000) == 0x6000) {
         *sizeOfDataLengthField = 2;

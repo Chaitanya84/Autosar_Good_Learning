@@ -49,7 +49,7 @@ void {{ service_name }}_On{{ event['name'] }}Subscribed(boolean isSubscribe, Tcp
 {% endfor %}
 {% endif %}
 {% if ReturnType != 'void' %}
-{% set _ = ArgsR.append(GetArgTypeC(ReturnType, allStructs) ~ ' return' ~ ReturnType) %}
+{% set _ = ArgsR.append(GetXfCType(ReturnType, allStructs) ~ ' *return' ~ ReturnType) %}
 {% endif %}
 Std_ReturnType {{ service_name }}_{{ method['name'] }}({{ Args | join(', ') }}{% if Args and ArgsR %}, {% endif %}{{ ArgsR | join(', ') }});
 Std_ReturnType {{ service_name }}_{{ method['name'] }}_Async({{ ArgsR | join(', ') }});
